@@ -1,4 +1,7 @@
 ---
+- name: Include distribution-specific variables.
+  include_vars: "{{ ansible_distribution }}.yml"
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Include distribution-specific variables.
   include_vars: "{{ ansible_distribution }}.yml"
@@ -20,3 +23,7 @@
 - name: Debian | Install Packages
   apt: pkg={{ item }} state=installed force=yes
   with_items: "{{ mongodb_packages }}"
+
+- name: Install additional packages
+  apt: name={{item}}
+  with_items: "{{ mongodb_additional_packages | default([]) }}"

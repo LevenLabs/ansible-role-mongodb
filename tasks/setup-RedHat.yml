@@ -6,7 +6,7 @@
 
 - name: RedHat | Add source sources
   yum_repository:
-    name: mongodb-org-{{ mongodb_version }}
+    name: mongodb
     description: MongoDB Repository
     baseurl: "{{ mongodb_repo_baseurl }}"
     gpgcheck: "{{ mongodb_repo_gpgcheck }}"
@@ -15,3 +15,7 @@
 - name: RedHat | Install Packages
   yum: name={{ item }} state=installed
   with_items: "{{ mongodb_packages }}"
+
+- name: RedHat | Install Additional Packages
+  yum: name={{ item }} state=installed
+  with_items: "{{ mongodb_additional_packages | default([]) }}"

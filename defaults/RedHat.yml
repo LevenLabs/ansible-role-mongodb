@@ -2,3 +2,6 @@
 
 mongodb_packages_dependencies:
   - libselinux-python
+
+mongodb_yum_url: http://downloads-distro.mongodb.org/repo/redhat/os/x86_64/
+

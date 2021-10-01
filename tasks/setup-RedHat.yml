@@ -1,5 +1,4 @@
 ---
-
 - name: RedHat | Install dependencies packages
   yum: name={{ item }} state=installed
   with_items: "{{ mongodb_packages_dependencies | default([]) }}"
@@ -11,6 +10,11 @@
     baseurl: "{{ mongodb_repo_baseurl }}"
     gpgcheck: "{{ mongodb_repo_gpgcheck }}"
     gpgkey: "{{ mongodb_repo_gpgkey }}"
+  register: source_sources
+
+- name: Clean yum cache
+  shell: yum clean all
+  when: source_sources is changed
 
 - name: RedHat | Install Packages
   yum: name={{ item }} state=installed
